@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>武汉 · 城市记忆</title>
+    <meta
+      name="description"
+      content="沿江而下，穿行武汉七段城市记忆：盘龙城、汉口开埠、辛亥首义、长江大桥、守护江城、春天重启，直到向新而行的今天。"
+    />
+    <meta property="og:title" content="武汉 · 城市记忆" />
+    <meta property="og:description" content="沿时间而行，一座江城的七段记忆。" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="zh_CN" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=DM+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <!-- 封面序章：两岸轮廓 → 长江穿流 → 标题浮现 -->
+    <div class="cover" id="cover" aria-hidden="false">
+      <div class="cover-inner">
+        <p class="cover-sub">沿 时 间 而 行</p>
+        <h1 class="cover-title">武汉 · 城市记忆</h1>
+
+        <svg
+          class="cover-map"
+          viewBox="0 0 600 760"
+          fill="none"
+          aria-label="武汉三镇与长江示意图"
+          role="img"
+        >
+          <defs>
+            <!-- 岸线与江水：上下缘淡出，像江河流出画面 -->
+            <linearGradient id="edge-fade" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#fff" stop-opacity="0" />
+              <stop offset="10%" stop-color="#fff" stop-opacity="1" />
+              <stop offset="90%" stop-color="#fff" stop-opacity="1" />
+              <stop offset="100%" stop-color="#fff" stop-opacity="0" />
+            </linearGradient>
+            <mask id="edge-mask"><rect width="600" height="760" fill="url(#edge-fade)" /></mask>
+          </defs>
+
+          <!-- 左右江岸线：描边生长，上下缘淡出 -->
+          <g mask="url(#edge-mask)">
+            <path
+              class="shore shore-left"
+              pathLength="100"
+              d="M262,0
+                 C245,80 270,140 250,210
+                 C232,275 208,320 226,380
+                 C240,430 262,470 250,540
+                 C238,610 255,670 246,760"
+            />
+            <path
+              class="shore shore-right"
+              pathLength="100"
+              d="M350,0
+                 C372,75 342,140 360,205
+                 C378,270 400,320 380,385
+                 C362,445 340,490 352,555
+                 C364,620 346,680 358,760"
+            />
+          </g>
+          <!-- 江水：长江 + 汉江 + 流光，上下缘淡出 -->
+          <g mask="url(#edge-mask)">
+            <!-- 长江主河道 -->
+            <path
+              class="river-main"
+              pathLength="100"
+              d="M305,0
+                 C300,80 292,140 300,210
+                 C308,280 318,320 306,385
+                 C296,445 300,500 300,555
+                 C300,620 306,680 302,760"
+            />
+            <!-- 汉江，自画面外西侧汇入长江 -->
+            <path
+              class="river-han"
+              pathLength="100"
+              d="M-24,326 C70,335 120,350 175,345
+                 C220,342 260,345 300,362"
+            />
+            <!-- 江面流光 -->
+            <path
+              class="river-flow"
+              pathLength="100"
+              d="M305,0
+                 C300,80 292,140 300,210
+                 C308,280 318,320 306,385
+                 C296,445 300,500 300,555
+                 C300,620 306,680 302,760"
+            />
+          </g>
+          <!-- 三镇 -->
+          <g class="towns">
+            <circle class="town-dot" cx="172" cy="278" r="3.5" />
+            <text class="town-label" x="158" y="262">汉口</text>
+            <circle class="town-dot" cx="160" cy="448" r="3.5" />
+            <text class="town-label" x="146" y="470">汉阳</text>
+            <circle class="town-dot" cx="442" cy="392" r="3.5" />
+            <text class="town-label" x="456" y="398">武昌</text>
+          </g>
+        </svg>
+
+        <p class="cover-desc">三千五百年，一座江城的八段记忆</p>
+      </div>
+
+      <button class="scroll-hint" id="cover-enter" type="button">
+        <span>滚轮向下 · 沿江而行</span>
+        <svg width="14" height="20" viewBox="0 0 14 20" fill="none" aria-hidden="true">
+          <path d="M7 1v16m0 0-5-5m5 5 5-5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <main class="experience" id="experience" aria-hidden="true">
+      <header class="masthead">
+        <span>武汉 · 城市记忆</span>
+        <span id="counter">01 / 07</span>
+      </header>
+
+      <aside class="timeline-side" aria-label="城市记忆时间轴">
+        <svg class="river-line" viewBox="0 0 180 700" preserveAspectRatio="none" aria-hidden="true">
+          <!-- 未走过的江：虚线 -->
+          <path
+            id="river-base"
+            d="M138 0 C28 118, 168 194, 83 316 S20 510, 129 700"
+          />
+          <!-- 已走过的江：实线进度，pathLength 归一化为 100 -->
+          <path
+            id="river-progress"
+            class="river-progress"
+            d="M138 0 C28 118, 168 194, 83 316 S20 510, 129 700"
+            pathLength="100"
+          />
+        </svg>
+        <nav class="year-rail" id="year-rail" aria-label="选择年份"></nav>
+      </aside>
+
+      <section class="image-stage" id="image-stage" aria-label="武汉城市影像，可用方向键切换">
+        <div class="gallery-track" id="gallery-track">
+          <button
+            class="preview-card previous-card"
+            id="previous-image"
+            type="button"
+            aria-label="查看同年上一张影像"
+          >
+            <img id="previous-preview" src="" alt="" />
+            <span>上一帧</span>
+          </button>
+          <div class="main-card" id="main-card">
+            <img id="main-image" src="" alt="" />
+            <!-- 1957 今昔对比滑块 -->
+            <div class="compare" id="compare" aria-hidden="true">
+              <img class="compare-after" id="compare-after" src="" alt="今天的长江大桥" />
+              <div class="compare-handle" id="compare-handle" aria-hidden="true">
+                <span class="compare-line"></span>
+                <span class="compare-thumb">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                    <path d="M7 4l-4 6 4 6M13 4l4 6-4 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </div>
+              <span class="compare-label compare-label-before">1957</span>
+              <span class="compare-label compare-label-after">今天</span>
+            </div>
+          </div>
+          <button
+            class="preview-card next-card"
+            id="next-image-button"
+            type="button"
+            aria-label="查看同年下一张影像"
+          >
+            <img id="next-preview" src="" alt="" />
+            <span>下一帧</span>
+          </button>
+        </div>
+
+        <div class="year-display">
+          <span id="active-year"></span>
+          <span id="active-title"></span>
+        </div>
+        <p class="image-note" id="image-note"></p>
+        <p class="image-count" id="image-count"></p>
+      </section>
+
+      <!-- 史实说明：底部展签条 -->
+      <footer class="fact-bar">
+        <p class="image-fact" id="image-fact"></p>
+      </footer>
+
+      <p class="gesture-hint" id="gesture-hint">
+        滚轮或按住左键<br />沿时间而行
+      </p>
+      <p class="brand-mark">WUHAN<br />MEMORY</p>
+
+      <!-- 屏幕阅读器切换播报 -->
+      <p class="sr-only" id="live-region" aria-live="polite" aria-atomic="true"></p>
+    </main>
+    <script src="./script.js"></script>
+  </body>
+</html>
